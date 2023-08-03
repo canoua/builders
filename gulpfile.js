@@ -23,6 +23,8 @@ const sync = require('browser-sync').create()
 //конвертация шрифтов
 const fonter = require('gulp-fonter-unx');
 const ttf2woff2 = require('gulp-ttf2woff2');
+//sourcemaps
+const sourcemaps = require('gulp-sourcemaps');
 
 
 function html() {
@@ -38,17 +40,21 @@ function html() {
 
 function scripts() {
   return src('src/scripts/*.js')
+    .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(dest('build/scripts'))
 }
 
 function styles() {
   return src('src/styles/*.scss')
+    .pipe(sourcemaps.init())
     .pipe(concat('style.css'))
     .pipe(autoPrefixer(['last 2 versions']))
     .pipe(sass().on('error', sass.logError))
     .pipe(csso())
+    .pipe(sourcemaps.write())
     .pipe(dest('build/styles/'))
 }
 
