@@ -25,6 +25,8 @@ const fonter = require('gulp-fonter-unx');
 const ttf2woff2 = require('gulp-ttf2woff2');
 //sourcemaps
 const sourcemaps = require('gulp-sourcemaps');
+//webp converter
+const webp = require('gulp-webp');
 
 
 function html() {
@@ -61,6 +63,7 @@ function styles() {
 function imageminification() {
   return src('src/images/*')
     .pipe(imagemin())
+    .pipe(webp())
     .pipe(dest('build/images'))
 }
 
