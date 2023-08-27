@@ -41,7 +41,7 @@ function html() {
 }
 
 function scripts() {
-  return src('src/scripts/*.js')
+  return src('src/scripts/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(uglify())
@@ -50,7 +50,7 @@ function scripts() {
 }
 
 function styles() {
-  return src('src/styles/*.scss')
+  return src('src/styles/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(concat('style.css'))
     .pipe(autoPrefixer(['last 2 versions']))

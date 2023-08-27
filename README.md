@@ -1,2 +1,2 @@
-# gulp-starter
 Сборка gulp
+html, scss, javascript
