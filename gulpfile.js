@@ -2,7 +2,7 @@
 const { src, dest, parallel, series, watch } = require('gulp');
 //***
 //html
-const htmlmin = require('gulp-htmlmin');
+// const htmlmin = require('gulp-htmlmin');
 //стили
 const sass = require('gulp-sass')(require('sass'));
 const csso = require('gulp-csso');
@@ -34,34 +34,34 @@ function html() {
     .pipe(include({
       prefix: '@@'
     }))  
-    .pipe(htmlmin({
-      collapseWhitespace: true
-    }))
+    // .pipe(htmlmin({
+    //   collapseWhitespace: true
+    // }))
     .pipe(dest('build'))
 }
 
 function scripts() {
   return src('src/scripts/**/*.js')
     .pipe(sourcemaps.init())
-    .pipe(concat('app.min.js'))
-    .pipe(uglify())
+    .pipe(concat('app.js'))
+    // .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(dest('build/scripts'))
 }
 
 function styles() {
-  return src('src/styles/**/*.scss')
+  return src('src/styles/style.scss')
     .pipe(sourcemaps.init())
     .pipe(concat('style.css'))
     .pipe(autoPrefixer(['last 2 versions']))
     .pipe(sass().on('error', sass.logError))
-    .pipe(csso())
+    // .pipe(csso())
     .pipe(sourcemaps.write())
     .pipe(dest('build/styles/'))
 }
 
 function imageminification() {
-  return src('src/images/*')
+  return src('src/images/**/*')
     .pipe(imagemin())
     .pipe(webp())
     .pipe(dest('build/images'))
@@ -73,22 +73,23 @@ function cleanBuild() {
 }
 
 function fonts() {
-  return src('src/fonts/*')
+  return src('src/fonts/**/*')
     .pipe(fonter({
       formats: ['woff', 'ttf', 'eot']
     }))
     .pipe(dest('src/fonts'))
     .pipe(dest('build/fonts'))
 }
+
 function fontsWoff2() {
-  return src('src/fonts/*')
+  return src('src/fonts/**/*')
     .pipe(ttf2woff2())
     .pipe(dest('src/fonts'))
     .pipe(dest('build/fonts'))
 }
 
 function buildFonts() {
-  return src('src/fonts/*')
+  return src('src/fonts/**/*')
     .pipe(fonter({
       formats: ['woff', 'ttf', 'eot']
     }))
@@ -119,7 +120,7 @@ exports.cleanBuild = cleanBuild
 exports.imageminification = imageminification
 
 //build
-exports.build = parallel(fonts, buildFonts, html, imageminification, styles, scripts)
+exports.build = parallel(fonts, buildFonts, fontsWoff2, html, imageminification, styles, scripts)
 
 //serve
 exports.serve = serve
